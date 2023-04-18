@@ -13,6 +13,7 @@ import { PedComponent } from './pedi/pedi.component';
 @Component({
   selector: 'app-root',
   templateUrl: './calendar.component.html',
+  styleUrls: ['./app.component.css'],
   providers: [SupplierService],
 })
 export class AppComponent implements OnInit{

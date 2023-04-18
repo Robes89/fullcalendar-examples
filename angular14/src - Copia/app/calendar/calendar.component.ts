@@ -5,17 +5,17 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
 
-
-import { INITIAL_EVENTS, createEventId } from './event-utils';
 import { SupplierService } from './supplier.service';
-import { PedComponent } from './pedi/pedi.component';
+import { PedComponent } from '../pedi/pedi.component';
+
 
 @Component({
-  selector: 'app-root',
+  selector: 'app-calendar',
   templateUrl: './calendar.component.html',
+  styleUrls: ['../app.component.css'],
   providers: [SupplierService],
 })
-export class AppComponent implements OnInit{
+export class Appcalendar implements OnInit{
   calendarVisible = true;
   calendarOptions: CalendarOptions = {
     plugins: [
