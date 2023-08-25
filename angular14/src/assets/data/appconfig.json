@@ -1,0 +1,9 @@
+{
+    "name": "TotvsControlChecklist",
+    "version": "12.1.33-0.0.0",
+    "serverBackend": "/app-root/",
+    "restEntryPoint": "",
+    "versionAPI": "",
+    "productLine": "Protheus",
+    "api_baseUrl": "/app-root/"
+}   

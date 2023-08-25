@@ -1,91 +1,101 @@
-import { Component } from '@angular/core';
+import { Component, NgModule, ViewChild } from '@angular/core';
+import { pediService } from './pedi.service';
+import { CalendarioComponent } from '../calendario/calendario.component';
+import { Name } from '@totvs/protheus-lib-core';
+import { Custom } from './pedi.layut';
+import { ActivatedRoute, Router, RouterLinkActive } from '@angular/router';
+import { PoModalComponent,   PoNotificationService  } from '@po-ui/ng-components';
 
+import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'pedi.component',
   templateUrl: './pedi.component.html'
 })
 export class PedComponent {
-  rowActions = {
-    beforeSave: this.onBeforeSave.bind(this),
-    afterSave: this.onAfterSave.bind(this),
-    beforeRemove: this.onBeforeRemove.bind(this),
-    afterRemove: this.onAfterRemove.bind(this),
-    beforeInsert: this.onBeforeInsert.bind(this)
-  };
+  
 
+  public cidpedido : string
+  novadata : string | Date;
+  
+  extraInformation: any;
   columns = [
-    { property: 'id', label: 'Código', align: 'right', readonly: true, freeze: true, width: 120 },
-    { property: 'name', label: 'Nome', width: '200px', required: true },
-    { property: 'occupation', label: 'Cargo', width: 150 },
-    { property: 'email', label: 'E-mail', width: 100, required: true },
-    { property: 'status', label: 'Status', align: 'center', width: 80 },
-    { property: 'lastActivity', label: 'Última atividade', align: 'center', width: 140 }
+    
+    { property: 'id', label: 'Código' ,type: 'link',color : 'color-10',action: (value ,row) => {
+      this.details(value , row );
+    },},
+    { property: 'name', label: 'Nome' },
+    
+    { property: 'emissao', label: 'Emissao' },
+    
+    { property: 'TIPO', label: 'E-mail' }
   ];
+  
+  colunas = []
+  data:  Array<any> = [];
+  items: Array<any>;
+  title: any;
+  
+  oservice: pediService
+  ocalendario: CalendarioComponent
+  status: any;
 
-  data = [
-    {
-      id: 629131,
-      name: 'Jhonatas Silvano',
-      occupation: 'Developer',
-      email: 'jhonatas.silvano@po-ui.com.br',
-      status: 'Active',
-      lastActivity: '2018-12-12'
-    },
-    {
-      id: 78492341,
-      name: 'Rafael Gonçalvez',
-      occupation: 'Engineer',
-      email: 'rafael.goncalvez@po-ui.com.br',
-      status: 'Active',
-      lastActivity: '2018-12-10'
-    },
-    {
-      id: 986434,
-      name: 'Nicoli Pereira',
-      occupation: 'Developer',
-      email: 'nicoli.pereira@po-ui.com.br',
-      status: 'Active',
-      lastActivity: '2018-12-12'
-    },
-    {
-      id: 4235652,
-      name: 'Mauricio João Mendez',
-      occupation: 'Developer',
-      email: 'mauricio.joao@po-ui.com.br',
-      status: 'Active',
-      lastActivity: '2018-11-23'
-    },
-    {
-      id: 629131,
-      name: 'Leandro Oliveira',
-      occupation: 'Engineer',
-      email: 'leandro.oliveira@po-ui.com.br',
-      status: 'Active',
-      lastActivity: '2018-11-30'
-    }
-  ];
+  constructor(
+    private oServices: pediService,
+    private oRouter: Router,
+    public oPo :PoNotificationService,
+    
+  ) {}
 
-  onBeforeSave(row: any, old: any) {
-    return row.occupation !== 'Engineer';
+ 
+  
+  ngOnInit(): void {
+    
+   this.addpedido(this);  
   }
+  @ViewChild(PoModalComponent, { static: true }) poModal: PoModalComponent;
 
-  onAfterSave(row) {
-    // console.log('onAfterSave(new): ', row);
+ 
+  details(cvaleu ,crow ) {
+    this.cidpedido = cvaleu
+    
+    this.poModal.open();
+    
   }
-
-  onBeforeRemove(row) {
-    // console.log('onBeforeRemove: ', row);
-
-    return true;
+  confirmFruits( ) {
+   
+    this.oServices.POstNewdata(this.cidpedido,this.novadata);
+    this.poModal.close();
+    this.oRouter.navigateByUrl('pedidos');
   }
-
-  onAfterRemove(row) {
-    // console.log('onAfterRemove: ', row);
+  closeModal(){
+    this.poModal.close();
   }
-
-  onBeforeInsert(row) {
-    // console.log('onBeforeInsert: ', row);
-
-    return true;
+  
+  addpedido(apedido) {
+    this.data = [];
+    let aData = [];
+    
+    this.oServices.getPedList().subscribe(
+   
+      (res) => {
+        
+        res.forEach((item) => {
+          aData.push(item);
+      
+          
+        });
+      },
+      (error) => {
+        console.log(error);
+        this.oPo.error(error);
+      },
+      () => {
+        this.data = aData;
+      }
+    );
   }
 }
+
+
+

@@ -1,0 +1,25 @@
+<div class="po-wrapper">
+
+    <po-menu p-filter="true" [p-menus]="[{ label: 'Home', link: '/',icon: 'po-icon-home' },{ label: 'Pedidos', link: '/pedidos',icon: 'po-icon-news' }]">
+
+
+    </po-menu>
+
+    <router-outlet></router-outlet>
+
+    <po-page-default p-title="Home">
+        <div class='demo-app'>
+
+
+            <div class='demo-app-main'>
+                <full-calendar *ngIf='calendarVisible' [options]='calendarOptions' deepChangeDetection="true" [events]="eventsPromise | async">
+                    <ng-template #eventContent let-arg>
+                        <b>{{ arg.timeText }}</b>
+                        <i>{{ arg.event.title }}</i>
+                    </ng-template>
+                </full-calendar>
+            </div>
+
+        </div>
+    </po-page-default>
+</div>

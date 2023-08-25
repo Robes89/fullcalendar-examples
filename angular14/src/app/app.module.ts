@@ -1,29 +1,39 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { AppComponent } from './app.component';
 import { ProtheusLibCoreModule } from '@totvs/protheus-lib-core';
-import { SupplierService } from './supplier.service';
+
 import {  HttpClientModule } from '@angular/common/http';
-import { PoTableModule } from '@po-ui/ng-components';
+
 import { PedComponent } from './pedi/pedi.component';
-import { PoModule } from '@po-ui/ng-components';
+
 import { AppRoutingModule } from './app-routing.module';
+import { CalendarioComponent } from './calendario/calendario.component';
+
+import { SupplierService } from './calendario/services/supplier.service';
+import { PoModule } from '@po-ui/ng-components';
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
-    PedComponent
+    PedComponent,
+    CalendarioComponent,
+
     
   ],
   imports: [
     BrowserModule,
     FullCalendarModule,
-    HttpClientModule,PoTableModule,
+    HttpClientModule,
+    AppRoutingModule,
+    RouterModule,
     PoModule,
-    AppRoutingModule
-
-   // ProtheusLibCoreModule,
+    FormsModule,
+  //ProtheusLibCoreModule,
     
   ],
   providers: [SupplierService],

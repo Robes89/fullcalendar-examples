@@ -1,14 +1,15 @@
 
 import { RouterModule, Routes } from '@angular/router';
-import { PedComponent } from './pedi.component';
+
 import { NgModule } from '@angular/core';
+import { CalendarioComponent } from './calendario.component';
 
 const routes: Routes = [
-  { path: '/pedidos', component: PedComponent }
+  { path: '/home', component: CalendarioComponent }
 ];
-
+  
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class PeriRouting {}
+export class CalendarioRouting {}
